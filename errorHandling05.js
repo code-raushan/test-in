@@ -25,3 +25,11 @@ function errorThrowing(){
     }
 }
 errorThrowing() // console loggs: custom error
+
+/*
+     In Express Framework, we can handle the errors using a middleware as well;
+*/
+const app = express();
+app.use((err, req, res, next)=>{
+    console.log(err)
+});
