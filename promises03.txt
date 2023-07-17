@@ -1,0 +1,33 @@
+## Question 3:
+
+
+
+Explanation: As JavaScript is a single threaded synchronous language, so every execution happens sequentially, but when the program encounters, Web APIs or promises (asynchronous tasks), the JS engine puts them into a different queue and proceeds further with the synchronous code and pushes it in the call stack to be executed. 
+
+In this program as well, first of all "Start" and "End" will be pushed to the call stack respectively and printed in the console because they are synchronous statements and give priority by the JS engine.
+
+
+Then it encounters setTimeout which is a Web API and hence handled not by
+ the main thread, this setTimeout will go into the Web APIs handling section of the JS Engine. This setTimeout will later move to the callback queue (or task queue) waiting for the call stack to be empty. 
+
+After setTimeout, the engine encounters three consecutive promises and move them to the Microtask Queue responsible for handling promises statements. 
+
+Now the engine has two filled up queues waiting for the call stack to be empty, one callback queue with the first setTimout function which will run the callback function inside it after 0 seconds. Secondly, the other queue is microtask queue, which has promise1, followed by promise2 which is followed by promise3. 
+
+As per the engine, tasks in the microtask queue are given priority over callback queue, so when the engine finds the call stack to be empty then, promise statements in microtask queue are executed in the FIFO manner as expected by a queue. First promise 1 will try to resolve but since it has a setTimeout so it moves to the callback queue following the first setTimeout declared before promises. Same will happen to other 2 promise statements in the microtask queue. So eventually, the microtask queue will be emptied and the callback queue will contain four setTimouts,
+
+----callback queue--------------------------------------|
+setTimeout_1, setTimeout_1_from_Promise_1,
+setTimeout_2_from_Promise_2, setTimeout_3_from_Promise_3                                                    |
+--------------------------------------------------------|                  
+
+Now since the call stack is empty, event loop will take tasks one by one from the callback queue and execute them.
+
+So the final result will be:
+
+"Start"
+"End"
+"timeout"
+"Promise 1 resolved"
+"Promise 2 resolved"
+"Promise 3 resolved"
