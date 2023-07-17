@@ -36,7 +36,9 @@ promise.then((resp)=> resp)
     .then((resp)=>resp)
     .then((resp)=>resp)
 // depending the statement used inside the promise
-    .catch((err)=>{}) // to catch the error if one exist
+    .catch((err)=>{
+        // handling the error
+    }) // to catch the error if one exist
 
 
 // We can also use Async-Await to get rid of this chaining.
